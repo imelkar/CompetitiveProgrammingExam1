@@ -24,7 +24,10 @@ int main(){
     // printf("min = %lld\n", min);
     for(long long int i=1; i<n; ++i){
         cin >> p >> c;
-        for(long long int j=0; j<min; ++j){
+        if(p < 0){
+            continue;
+        }
+        for(long long int j=c/p; j<min; ++j){
             if(p*j-c > 0){
                 ms[j] = ms[j] + p*j-c;
                 if(ms[j] >= m){
