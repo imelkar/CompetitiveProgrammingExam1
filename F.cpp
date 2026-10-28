@@ -6,42 +6,55 @@ using namespace std;
 int main(){
     int k, n;
     cin >> k;
-    vector<llint> res;
+    vector<int> res;
     for(int i=0; i<k; ++i){
         cin >> n;
-        llint p[n];
-        for(llint j=0; j<n; ++j){
-            cin >> p[j];
-        }
-        queue<int> to_try;
-        to_try.push(n-1);
         bool found = false;
-        while(!to_try.empty()){
-            int a = to_try.front();
-            to_try.pop();
-
-            llint bob = p[a];
-            llint min = -1;
-            for(int j=a-1; j>=0; --j){
-                if(min != -1){
-                    if(p[j] < bob && p[j] > min){
-                        found = true;
-                        break;
+        llint min_alice, min_me = -1, min_alice_backup = -1, temp;
+        priority_queue<llint> not_found;
+        cin >> min_alice;
+        not_found.push(min_alice);
+        for(int j=1; j<n; ++j){
+            cin >> temp;
+            if(found){continue;}
+            if(temp < min_me || (temp < min_alice && min_me == -1)){
+                if(min_alice_backup != -1){
+                    min_alice = min_alice_backup;
+                    min_alice_backup = -1;
+                }
+                if(min_me < min_alice && min_me != -1){
+                    min_alice = min_me;
+                }
+                if(min_me == -1){
+                    min_me = temp;
+                    llint top = not_found.top();
+                    while(top > min_me){
+                        min_alice = top;
+                        not_found.pop();
+                        if(!not_found.empty()){
+                            top = not_found.top();
+                        }
+                        else{
+                            break;
+                        }
                     }
                 }
-                if(p[j] < bob){
-                    if(min == -1 || min > p[j]){
-                        min = p[j];
-                    }
-                }
-                else if(p[j] > bob){
-                    to_try.push(j);
-                }
+                min_me = temp;
             }
-            if(found){
-                break;
+            else if((temp < min_alice && temp > min_me)&&(temp < min_alice_backup || min_alice_backup == -1)){
+                min_alice_backup = temp;
+            }
+            else if(temp > min_alice && min_me != -1){
+                found = true;
+            }
+            else if(min_me == -1){
+                not_found.push(temp);
+                if(temp > min_alice){
+                    min_alice = temp;
+                }
             }
         }
+        
         if(found){
             res.push_back(i+1);
         }
