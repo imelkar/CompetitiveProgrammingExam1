@@ -3,13 +3,13 @@ using namespace std;
 
 
 int main(){
-    long long int n, m, p, c;
+    long int n, m, p, c;
     cin >> n >> m;
-    long long int min = INFINITY;
-    vector<long long int> ms;
+    long int min = 1000000000;
+    vector<long int> ms;
     cin >> p >> c;
-    for(long long int i=0; ;++i){
-        long long int res = p*i-c;
+    for(long int i=0; i<min ;++i){
+        long int res = p*i-c;
         if(res > 0){
             ms.push_back(res);
         }
@@ -22,12 +22,12 @@ int main(){
         }
     }
     // printf("min = %lld\n", min);
-    for(long long int i=1; i<n; ++i){
+    for(long int i=1; i<n; ++i){
         cin >> p >> c;
         if(p < 0){
             continue;
         }
-        for(long long int j=c/p; j<min; ++j){
+        for(long int j=c/p; j<min; ++j){
             if(p*j-c > 0){
                 ms[j] = ms[j] + p*j-c;
                 if(ms[j] >= m){
