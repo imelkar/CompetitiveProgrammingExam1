@@ -35,7 +35,7 @@ int main(){
             cin >> depth[i][j];
         }
     }
-    double dist[n][n] = {10000000000000};
+    int dist[n][n] = {10000000000000};
     dist[0][0] = 0;
     priority_queue<edge, vector<edge>, compare> pq;
     edge e = makeEdge(depth[0][1], 0, 0, 0, 1);
@@ -50,17 +50,20 @@ int main(){
             dist[t.i][t.j] = t.max_depth;
 
             if(t.i > 0){
-                pq.push(makeEdge(max(depth[t.i][t.j], depth[t.i-1][t.j]), t.i, t.j, t.i-1, t.j));
+                pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i-1][t.j]), t.i, t.j, t.i-1, t.j));
             }
             if(t.i < n-1){
-                pq.push(makeEdge(max(depth[t.i][t.j], depth[t.i+1][t.j]), t.i, t.j, t.i+1, t.j));
+                pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i+1][t.j]), t.i, t.j, t.i+1, t.j));
             }
             if(t.j > 0){
-                pq.push(makeEdge(max(depth[t.i][t.j], depth[t.i][t.j-1]), t.i, t.j, t.i, t.j-1));
+                pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i][t.j-1]), t.i, t.j, t.i, t.j-1));
             }
             if(t.i < n-1){
-                pq.push(makeEdge(max(depth[t.i][t.j], depth[t.i][t.j+1]), t.i, t.j, t.i, t.j+1));
+                pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i][t.j+1]), t.i, t.j, t.i, t.j+1));
             }
         }
     }
+
+    cout << dist[n-1][n-1] << '\n';
+    
 }
