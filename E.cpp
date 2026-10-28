@@ -10,7 +10,12 @@ int main(){
     cin >> p >> c;
     for(long long int i=0; ;++i){
         long long int res = p*i-c;
-        ms.push_back(res);
+        if(res > 0){
+            ms.push_back(res);
+        }
+        else{
+            ms.push_back(0);
+        }
         if(res >= m){
             min = i;
             break;
@@ -20,7 +25,7 @@ int main(){
     for(long long int i=1; i<n; ++i){
         cin >> p >> c;
         for(long long int j=0; j<min; ++j){
-            if(ms[j] < ms[j] + p*j-c){
+            if(p*j-c > 0){
                 ms[j] = ms[j] + p*j-c;
                 if(ms[j] >= m){
                     min = j;
