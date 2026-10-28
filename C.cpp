@@ -29,13 +29,13 @@ edge makeEdge(int a, int b, int c, int d, int e){
 int main(){
     int n;
     cin >> n;
-    long int depth[n][n];
+    long long int depth[n][n];
     for(int i=0; i<n; ++i){
         for(int j=0; j<n; ++j){
             cin >> depth[i][j];
         }
     }
-    long int dist[n][n];
+    long long int dist[n][n];
     for(int i=0; i<n; ++i){
         for(int j=0; j<n; ++j){
              dist[i][j] = -1;
@@ -51,11 +51,17 @@ int main(){
     while(!pq.empty()){
         edge t = pq.top();
         pq.pop();
-        printf("%ld %d %d %d %d %d\n", dist[t.i][t.j], t.max_depth, t.x, t.y, t.i, t.j);
+        // printf("%ld %d %d %d %d %d\n", dist[t.i][t.j], t.max_depth, t.x, t.y, t.i, t.j);
         if(dist[t.i][t.j] > t.max_depth || dist[t.i][t.j] == -1){
             dist[t.i][t.j] = t.max_depth;
 
-            printf("New dist %d %d: %ld\n", t.i, t.j, dist[t.i][t.j]);
+            // printf("New dist %d %d: %ld\n", t.i, t.j, dist[t.i][t.j]);
+            // for(int i=0; i<n; ++i){
+            //     for(int j=0; j<n; ++j){
+            //         printf("%ld ", dist[i][j]);
+            //     }
+            //     printf("\n");
+            // }
 
             if(t.i > 0){
                 pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i-1][t.j]), t.i, t.j, t.i-1, t.j));
@@ -66,18 +72,18 @@ int main(){
             if(t.j > 0){
                 pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i][t.j-1]), t.i, t.j, t.i, t.j-1));
             }
-            if(t.i < n-1){
+            if(t.j < n-1){
                 pq.push(makeEdge(max(dist[t.i][t.j], depth[t.i][t.j+1]), t.i, t.j, t.i, t.j+1));
             }
         }
     }
 
-    for(int i=0; i<n; ++i){
-        for(int j=0; j<n; ++j){
-            printf("%ld ", dist[i][j]);
-        }
-        printf("\n");
-    }
+    // for(int i=0; i<n; ++i){
+    //     for(int j=0; j<n; ++j){
+    //         printf("%ld ", dist[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
     cout << dist[n-1][n-1] << '\n';
     
